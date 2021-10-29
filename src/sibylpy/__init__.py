@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import httpx, typing
-from .types import TokenValidation, CreateToken
+from .types import TokenValidation, CreateToken, AddBan
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 __version__ = '0.1.0'
 
@@ -55,4 +55,9 @@ class SibylClient:
             raise GeneralException("Failed to get token")
         return CreateToken(**r.json())
         
+    def add_ban(self, user_id: int) -> AddBan:
+        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to add ban")
+        return AddBan(**r.json())
         

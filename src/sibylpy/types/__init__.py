@@ -16,5 +16,6 @@
 
 from .token import TokenValidation, CreateToken
 from .result import Result
+from .bans import AddBan
 
-__all__ = [Result, TokenValidation, CreateToken]
+__all__ = [Result, TokenValidation, CreateToken, AddBan]
