@@ -16,7 +16,7 @@
 
 import httpx, typing
 
-from .types import TokenValidation, Ban, BanResult, Token
+from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 __version__ = '0.1.0'
 
@@ -58,24 +58,26 @@ class SibylClient:
         return Token(**r.json()["result"])
 
     def revoke_token(self, user_id: int):
-        r = self.client.get(f"{self.host}revokeToken?token={self.token}&user-id={user_id}")
-        if r.status_code != 200:
-            raise GeneralException("Failed to revoke token")
-        return Token(**r.json()["result"])
+        return self._token_method(
+            'revokeToken?token=', user_id, "Failed to revoke token"
+        )
 
-    # Not Tested
-    # Needs to be pulled from the latest version of the API 
     def change_permission(self, user_id: int, permission: int):
         r = self.client.get(f"{self.host}changePerm?token={self.token}&user-id={user_id}&permission={permission}")
         if r.status_code != 200:
-            raise GeneralException("Failed to revoke token")
-        return str(**r.json()["result"])
+            raise GeneralException("Failed to change permission")
+        return PermissionResponse(**r.json())
     
     def get_token(self, user_id: int):
-        r = self.client.get(f"{self.host}getToken?token={self.token}&user-id={user_id}")
+        return self._token_method(
+            'getToken?token=', user_id, "Failed to get token"
+        )
+
+    def _token_method(self, arg0, user_id, arg2):
+        r = self.client.get(f'{self.host}{arg0}{self.token}&user-id={user_id}')
         if r.status_code != 200:
-            raise GeneralException("Failed to get token")
-        return Token(**r.json()["result"])
+            raise GeneralException(arg2)
+        return Token(**r.json()['result'])
         
     def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None):
         r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
