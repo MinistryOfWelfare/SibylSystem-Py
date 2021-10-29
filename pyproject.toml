@@ -2,7 +2,7 @@
 name = "SibylPy"
 version = "0.1.0"
 description = "Python Wrapper for the Sibyl System Antispam API for telegram"
-authors = ["Sayan Biswas <sayan@pokurt.me>"]
+authors = ["Sayan Biswas <sayan@pokurt.me>", "Anonymous Indian <anonyindian1@gmail.com>"]
 packages = [
     { include = "src" }
 ]

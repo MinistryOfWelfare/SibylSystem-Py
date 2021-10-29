@@ -1,6 +1,6 @@
 # SibylPy
 
-# Copyright (C) 2021 Sayan Biswas
+# Copyright (C) 2021 Sayan Biswas, AnonyIndian
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class SibylClient:
     def __init__(self, host: str, token: str, client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
         if show_license:
             l = '''
-    SibylPy Copyright (C) 2021 Sayan Biswas
+    SibylPy Copyright (C) 2021 Sayan Biswas, AnonyIndian
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions.

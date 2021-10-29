@@ -1,6 +1,6 @@
 # SibylPy
 
-# Copyright (C) 2021 Sayan Biswas
+# Copyright (C) 2021 Sayan Biswas, AnonyIndian
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,6 +13,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 class GeneralException(Exception):
     def __init__(self, message: str) -> None:
         super().__init__(message)
