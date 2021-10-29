@@ -18,7 +18,7 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-__version__ = '0.1.0'
+__version__ = '0.0.2'
 
 class SibylClient:
     def __init__(self, host: str, token: str, client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:

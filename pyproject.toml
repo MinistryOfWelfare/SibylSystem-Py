@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "SibylPy"
-version = "0.1.0"
+version = "0.0.2"
 description = "Python Wrapper for the Sibyl System Antispam API for telegram"
 authors = ["Sayan Biswas <sayan@pokurt.me>", "Anonymous Indian <anonyindian1@gmail.com>"]
 packages = [
@@ -11,7 +11,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-readme = "README.rst"
+readme = "README.md"
 keywords = ["sibyl", "wrapper", "telegram", "antispam", "api"]
 homepage = "https://github.com/Dank-del/SibylPy"
 
