@@ -15,7 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import httpx, typing
-from .types import TokenValidation, CreateToken, AddBan
+
+from .types import TokenValidation, Ban, BanResult, Token
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 __version__ = '0.1.0'
 
@@ -31,33 +32,74 @@ class SibylClient:
             print(l)
         if not host.endswith("/"):
             host += "/"
+        if not host.startswith("http"):
+            host = "http://" + host
         self.host = host
         self.token = token
         self.client = client
         if not self.client:
             self.client = httpx.Client()
-        r = self.client.get(f"{self.host}checkToken?token={self.token}")
+        if not self.check_token(self.token):
+            raise InvalidTokenException()
+    
+    def check_token(self, token: str):
+        r = self.client.get(f"{self.host}checkToken?token={token}")
         x = TokenValidation(**r.json())
         if not x.success:
             raise InvalidTokenException()
-    
-    def create_token(self, user_id: int, permission: int = 0) -> CreateToken:
+        return x.result
+
+    def create_token(self, user_id: int, permission: int = 0):
         if permission > 2:
             raise InvalidPermissionRangeException("Permission can be 0, 1, 2, not {}".format(permission))
         r = self.client.get(f"{self.host}createToken?token={self.token}&user-id={user_id}&permission={permission}")
         if r.status_code != 200:
             raise GeneralException("Failed to create token")
-        return CreateToken(**r.json())
+        return Token(**r.json()["result"])
+
+    def revoke_token(self, user_id: int):
+        r = self.client.get(f"{self.host}revokeToken?token={self.token}&user-id={user_id}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to revoke token")
+        return Token(**r.json()["result"])
+
+    # Not Tested
+    # Needs to be pulled from the latest version of the API 
+    def change_permission(self, user_id: int, permission: int):
+        r = self.client.get(f"{self.host}changePerm?token={self.token}&user-id={user_id}&permission={permission}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to revoke token")
+        return str(**r.json()["result"])
     
     def get_token(self, user_id: int):
         r = self.client.get(f"{self.host}getToken?token={self.token}&user-id={user_id}")
         if r.status_code != 200:
             raise GeneralException("Failed to get token")
-        return CreateToken(**r.json())
+        return Token(**r.json()["result"])
         
-    def add_ban(self, user_id: int) -> AddBan:
-        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}")
+    def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None):
+        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
         if r.status_code != 200:
             raise GeneralException("Failed to add ban")
-        return AddBan(**r.json())
-        
+        return BanResult(**r.json()["result"])
+    
+    def delete_ban(self, user_id: int):
+        r = self.client.get(f"{self.host}removeBan?token={self.token}&user-id={user_id}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to delete ban")
+        return True
+    
+    def get_info(self, user_id: int):
+        r = self.client.get(f"{self.host}getInfo?token={self.token}&user-id={user_id}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to get info")
+        return Ban(**r.json()["result"])
+
+    def report_user(self, user_id: int, reason: str, message: str=None):
+        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={reason}&message={message}")
+        if r.status_code != 200:
+            raise GeneralException("Failed to delete ban")
+        return True
+
+
+    

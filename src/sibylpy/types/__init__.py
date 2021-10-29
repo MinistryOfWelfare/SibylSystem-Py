@@ -14,8 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .token import TokenValidation, CreateToken
-from .result import Result
-from .bans import AddBan
+from .token import *
+from .bans import *
 
-__all__ = [Result, TokenValidation, CreateToken, AddBan]
+__all__ = [Token, TokenValidation, Ban, BanResult]

@@ -19,9 +19,3 @@ class Ban:
 class BanResult:
     previous_ban: Optional[Ban] = None
     current_ban: Optional[Ban] = None
-    
-@dataclass
-class AddBan:
-    error: None
-    success: Optional[bool] = None
-    result: Optional[BanResult] = None
