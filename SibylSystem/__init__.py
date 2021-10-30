@@ -18,7 +18,7 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-__version__ = '0.0.5'
+__version__ = '0.0.6'
 
 class PsychoPass:
     def __init__(self, host: str, token: str, client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
