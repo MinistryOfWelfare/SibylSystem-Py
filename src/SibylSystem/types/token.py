@@ -1,4 +1,4 @@
-# SibylPy
+# SibylSystem-py
 
 # Copyright (C) 2021 Sayan Biswas, AnonyIndian
 

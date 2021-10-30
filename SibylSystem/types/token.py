@@ -1,4 +1,4 @@
-# SibylPy
+# SibylSystem-py
 
 # Copyright (C) 2021 Sayan Biswas, AnonyIndian
 
@@ -14,14 +14,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-class GeneralException(Exception):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
-        
-class InvalidTokenException(GeneralException):
-    def __init__(self) -> None:
-        super().__init__(message="Token is invalid")
-        
-class InvalidPermissionRangeException(GeneralException):
-    def __init__(self, message: str) -> None:
-        super().__init__(message)
+from dataclasses import dataclass
+from typing import Optional
+from datetime import datetime
+
+@dataclass
+class TokenValidation:
+    success: Optional[bool] = None
+    result: Optional[bool] = None
+    error: Optional[str] = None
+
+@dataclass
+class Token:
+    user_id: Optional[int] = None
+    hash: Optional[str] = None
+    permission: Optional[int] = None
+    created_at: Optional[datetime] = None
+    accepted_reports: Optional[int] = None
+    denied_reports: Optional[int] = None

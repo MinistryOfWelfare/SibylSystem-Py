@@ -1,4 +1,4 @@
-# SibylPy
+# SibylSystem-py
 
 # Copyright (C) 2021 Sayan Biswas, AnonyIndian
 
@@ -18,13 +18,13 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-__version__ = '0.0.2'
+__version__ = '0.0.4'
 
-class SibylClient:
+class PsychoPass:
     def __init__(self, host: str, token: str, client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
         if show_license:
             l = '''
-    SibylPy Copyright (C) 2021 Sayan Biswas, AnonyIndian
+    SibylSystem Copyright (C) 2021 Sayan Biswas, AnonyIndian
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions.

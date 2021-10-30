@@ -1,4 +1,4 @@
-# SibylPy
+# SibylSystem-py
 
 # Copyright (C) 2021 Sayan Biswas, AnonyIndian
 
@@ -14,24 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
-from typing import Optional
-from datetime import datetime
+from .token import Token, TokenValidation
+from .bans import Ban, BanResult
+from .permission import PermissionResponse
 
-
-@dataclass
-class Ban:
-    user_id: Optional[int] = None
-    banned: Optional[bool] = None
-    reason: Optional[str] = None
-    message: Optional[str] = None
-    ban_source_url: Optional[str] = None
-    date: Optional[datetime] = None
-    banned_by: Optional[int] = None
-    crime_coefficient: Optional[int] = None
-    
-
-@dataclass
-class BanResult:
-    previous_ban: Optional[Ban] = None
-    current_ban: Optional[Ban] = None
+__all__ = [Token, TokenValidation, Ban, BanResult, PermissionResponse]
