@@ -15,8 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from dataclasses import dataclass
-from typing import Optional
-from datetime import datetime
+from typing import List, Optional
 
 
 @dataclass
@@ -26,9 +25,10 @@ class Ban:
     reason: Optional[str] = None
     message: Optional[str] = None
     ban_source_url: Optional[str] = None
-    date: Optional[datetime] = None
     banned_by: Optional[int] = None
     crime_coefficient: Optional[int] = None
+    date: Optional[str] = None
+    ban_flags: Optional[List[str]] = None
     
 
 @dataclass
