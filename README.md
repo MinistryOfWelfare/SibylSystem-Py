@@ -10,7 +10,7 @@ pip install sibylsystem
 
 # Usage
 
-```
+```py
 >>> from SibylSystem import PsychoPass
 >>> c = PsychoPass("https://psychopass.animekaizoku.com", "your token")
 
