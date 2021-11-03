@@ -18,10 +18,10 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-__version__ = '0.0.6'
+__version__ = '0.0.8'
 
 class PsychoPass:
-    def __init__(self, host: str, token: str, client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
+    def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.animekaizoku.com/", client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
         if show_license:
             l = '''
     SibylSystem Copyright (C) 2021 Sayan Biswas, AnonyIndian
