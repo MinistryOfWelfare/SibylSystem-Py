@@ -16,7 +16,7 @@
 
 import httpx, typing
 
-from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult
+from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult, BanRes
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 __version__ = '0.0.9'
 
@@ -134,7 +134,7 @@ class PsychoPass:
             raise GeneralException(arg2)
         return Token(**r.json()['result'])
         
-    def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None) -> BanResult:
+    def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None) -> BanRes:
         """Add a new ban to database
 
         Args:
@@ -150,7 +150,10 @@ class PsychoPass:
             BanResult
         """
         r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
-        return BanResult(**r.json())
+        d = BanResult(**r.json())
+        if not d.success:
+            raise GeneralException(d.error["message"])
+        return d.result
     
     def delete_ban(self, user_id: int) -> bool:
         """Unban a user
