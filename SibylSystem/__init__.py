@@ -21,6 +21,15 @@ from .exceptions import GeneralException, InvalidTokenException, InvalidPermissi
 __version__ = '0.0.8'
 
 class PsychoPass:
+    """
+    Class for the Sibyl API client
+    
+    Args:
+        token (:obj:`str`): Sibyl API token
+        host (:obj:`str`, optional): Sibyl API service URL.
+        client (:obj:`httpx.Client`, optional): HTTPX client class.
+        show_license (:obj:`bool`, optional): Defaults to true, set to false to hide copyright message
+    """
     def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.animekaizoku.com/", client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
         if show_license:
             l = '''
@@ -42,19 +51,49 @@ class PsychoPass:
         if not self.check_token(self.token):
             raise InvalidTokenException()
     
-    def check_token(self, token: str):
+    def check_token(self, token: str) -> bool:
+        '''
+        Check if Sibyl API token is valid
+        
+        Args:
+            token (:obj:`str`): Sibyl API token
+
+        Raises:
+            InvalidTokenException
+
+        Returns:
+            bool: if the token is valid, it'll return True, else False
+        '''
         r = self.client.get(f"{self.host}checkToken?token={token}")
         x = TokenValidation(**r.json())
         if not x.success:
             raise InvalidTokenException()
         return x.result
 
-    def create_token(self, user_id: int, permission: int = 0):
+    def create_token(self, user_id: int, permission: int = 0) -> Token:
+        """
+        Create new token, with a user id and permission number
+        
+            0 = User,
+            1 = Enforcer,
+            2 = Inspector
+        
+        Args:
+            user_id (:obj:`int`): User Id of the user for the token to be assigned to.
+            permission (:obj:`int`, optional): [Permission of user]. Defaults to 0.
+
+        Raises:
+            InvalidPermissionRangeException
+            GeneralException
+
+        Returns:
+            Token
+        """
         if permission > 2:
             raise InvalidPermissionRangeException("Permission can be 0, 1, 2, not {}".format(permission))
         r = self.client.get(f"{self.host}createToken?token={self.token}&user-id={user_id}&permission={permission}")
         if r.status_code != 200:
-            raise GeneralException("Failed to create token")
+            raise GeneralException(r.json()["error"]["message"])
         return Token(**r.json()["result"])
 
     def revoke_token(self, user_id: int):
@@ -62,10 +101,26 @@ class PsychoPass:
             'revokeToken?token=', user_id, "Failed to revoke token"
         )
 
-    def change_permission(self, user_id: int, permission: int):
+    def change_permission(self, user_id: int, permission: int) -> PermissionResponse:
+        """Change permission of given user
+            
+            0 = User,
+            1 = Enforcer,
+            2 = Inspector
+            
+        Args:
+            user_id (:obj:`int`): User Id of the user to be promoted/demoted
+            permission (:obj:`int`): new permission of user, can be 0, 1, 2
+
+        Raises:
+            GeneralException
+
+        Returns:
+            PermissionResponse
+        """
         r = self.client.get(f"{self.host}changePerm?token={self.token}&user-id={user_id}&permission={permission}")
         if r.status_code != 200:
-            raise GeneralException("Failed to change permission")
+            raise GeneralException(r.json()["error"]["message"])
         return PermissionResponse(**r.json())
     
     def get_token(self, user_id: int):
@@ -79,28 +134,77 @@ class PsychoPass:
             raise GeneralException(arg2)
         return Token(**r.json()['result'])
         
-    def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None):
+    def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None) -> BanResult:
+        """Add a new ban to database
+
+        Args:
+            user_id (:obj:`int`): User Id of the user to be banned
+            reason (:obj:`str`): reason of the ban
+            message (:obj:`str`, optional): [Ban message, basically the message the given user was banned upon.]. Defaults to None.
+            source (:obj:`str`, optional): [Ban source, the message link to the message the user was banned upon]. Defaults to None.
+
+        Raises:
+            GeneralException
+
+        Returns:
+            BanResult
+        """
         r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
         if r.status_code != 200:
-            raise GeneralException("Failed to add ban")
+            raise GeneralException(r.json()["error"]["message"])
         return BanResult(**r.json()["result"])
     
-    def delete_ban(self, user_id: int):
+    def delete_ban(self, user_id: int) -> bool:
+        """Unban a user
+
+        Args:
+            user_id (:obj:`int`): User ID of the user to be unbanned
+
+        Raises:
+            GeneralException
+
+        Returns:
+            bool
+        """
         r = self.client.get(f"{self.host}removeBan?token={self.token}&user-id={user_id}")
         if r.status_code != 200:
-            raise GeneralException("Failed to delete ban")
+            raise GeneralException(r.json()["error"]["message"])
         return True
     
-    def get_info(self, user_id: int):
+    def get_info(self, user_id: int) -> Ban:
+        """Get info about a user on the API
+
+        Args:
+            user_id (:obj:`int`): User ID of the user to be looked up
+
+        Raises:
+            GeneralException
+
+        Returns:
+            Ban
+        """
         r = self.client.get(f"{self.host}getInfo?token={self.token}&user-id={user_id}")
         if r.status_code != 200:
-            raise GeneralException("Failed to get info")
+            raise GeneralException(r.json()["error"]["message"])
         return Ban(**r.json()["result"])
 
-    def report_user(self, user_id: int, reason: str, message: str=None):
+    def report_user(self, user_id: int, reason: str, message: str=None) -> bool:
+        """Report a user, on the API, to be worked upon by the inspectors
+
+        Args:
+            user_id (:obj:`int`): User Id of the user to be report
+            reason (:obj:`str`): reason of the ban
+            message (:obj:`str`, optional): [Ban message, basically the message the given user to be banned upon.]. Defaults to None.
+
+        Raises:
+            GeneralException
+
+        Returns:
+            bool
+        """
         r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={reason}&message={message}")
         if r.status_code != 200:
-            raise GeneralException("Failed to delete ban")
+            raise GeneralException(r.json()["error"]["message"])
         return True
 
 
