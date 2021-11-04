@@ -16,7 +16,7 @@
 
 import httpx, typing
 
-from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
+from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 __version__ = '0.0.9'
 
@@ -206,6 +206,17 @@ class PsychoPass:
         if r.status_code != 200:
             raise GeneralException(r.json()["error"]["message"])
         return True
-
-
     
+    def get_stats(self) -> StatsResult:
+        """Get stats from API
+
+        Raises:
+            GeneralException
+
+        Returns:
+            StatsResult
+        """
+        r = self.client.get(f"{self.host}stats?token={self.token}")
+        if r.status_code != 200:
+            raise GeneralException(r.json()["error"]["message"])
+        return StatsResult(**r.json())

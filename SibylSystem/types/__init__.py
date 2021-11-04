@@ -16,6 +16,7 @@
 
 from .token import Token, TokenValidation
 from .bans import Ban, BanResult
-from .permission import PermissionResponse
+from .permission import PermissionResponse, Permissions
+from .stats import StatsResult
 
-__all__ = [Token, TokenValidation, Ban, BanResult, PermissionResponse]
+__all__ = [Token, TokenValidation, Ban, BanResult, PermissionResponse, Permissions, StatsResult]
