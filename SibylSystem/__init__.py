@@ -18,7 +18,7 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-__version__ = '0.0.8'
+__version__ = '0.0.9'
 
 class PsychoPass:
     """
