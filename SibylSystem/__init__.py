@@ -150,9 +150,7 @@ class PsychoPass:
             BanResult
         """
         r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
-        if r.status_code != 200:
-            raise GeneralException(r.json()["error"]["message"])
-        return BanResult(**r.json()["result"])
+        return BanResult(**r.json())
     
     def delete_ban(self, user_id: int) -> bool:
         """Unban a user

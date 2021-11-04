@@ -17,6 +17,8 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
+from SibylSystem.types.error import Error
+
 
 @dataclass
 class Ban:
@@ -30,8 +32,14 @@ class Ban:
     date: Optional[str] = None
     ban_flags: Optional[List[str]] = None
     
+    
+@dataclass
+class BanRes:
+    previous_ban: Optional[Ban] = None
+    current_ban: Optional[Ban] = None
 
 @dataclass
 class BanResult:
-    previous_ban: Optional[Ban] = None
-    current_ban: Optional[Ban] = None
+    success: Optional[bool] = False
+    result: Optional[BanRes] = None
+    error: Optional[Error] = None
