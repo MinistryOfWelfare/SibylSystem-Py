@@ -204,7 +204,7 @@ class PsychoPass:
             raise GeneralException(d['error']['message'])
         return result
 
-    def report_user(self, user_id: int, reason: str, message: str, source_url: str = None) -> bool:
+    def report_user(self, user_id: int, reason: str, message: str, source_url: str = None, is_bot: typing.Optional[bool] = False) -> bool:
         """Report a user, on the API, to be worked upon by the inspectors
 
         Args:
@@ -212,6 +212,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`): Ban message, basically the message the given user to be banned upon.
             source_url (:obj:`str`, optional): Ban source, the message link to the message the user was banned upon.
+            is_bot (:obj:`bool`, optional): [Is the user a bot?]. Defaults to False.
 
         Raises:
             GeneralException
@@ -219,7 +220,7 @@ class PsychoPass:
         Returns:
             bool
         """
-        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&src={quote_plus(source_url) if source_url else None}")
+        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&src={quote_plus(source_url) if source_url else None}&isBot={is_bot}")
         d = ReportResponse(**r.json())
         if d.success:
             return True
