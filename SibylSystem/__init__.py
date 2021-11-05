@@ -19,7 +19,7 @@ import httpx, typing
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult, BanRes, ReportResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
 from urllib.parse import quote_plus
-__version__ = '0.0.9'
+__version__ = '0.0.10'
 
 class PsychoPass:
     """
