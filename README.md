@@ -1,4 +1,4 @@
-# SibylSystem-Py  ![downloads](https://img.shields.io/pypi/dm/SibylSystem)
+# SibylSystem-Py 
 
 >Python3 wrapper for the Sibyl System antispam API for telegram
 
