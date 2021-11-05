@@ -1,4 +1,4 @@
-# SibylSystem-Py
+# SibylSystem-Py 
 
 >Python3 wrapper for the Sibyl System antispam API for telegram
 
@@ -12,7 +12,7 @@ pip install sibylsystem
 
 ```py
 >>> from SibylSystem import PsychoPass
->>> c = PsychoPass("https://psychopass.animekaizoku.com", "your token")
+>>> c = PsychoPass("your token")
 
     SibylSystem Copyright (C) 2021 Sayan Biswas, AnonyIndian
     This program comes with ABSOLUTELY NO WARRANTY.
@@ -22,3 +22,8 @@ pip install sibylsystem
 >>> c.get_info(2037525377)
 Ban(user_id=2037525377, banned=True, reason='Arcane', message='', ban_source_url='', date='2021-10-30T18:47:00.004137+05:30', banned_by=895373440, crime_coefficient=0)
 ```
+
+
+# Docs ? 
+
+**Open the source and read the docstrings**
