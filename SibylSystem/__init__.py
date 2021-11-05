@@ -161,7 +161,7 @@ class PsychoPass:
         Returns:
             BanResult
         """
-        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&source={quote_plus(message)}")
+        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message) if message else None}&source={quote_plus(source) if source else None}")
         d = BanResult(**r.json())
         if not d.success:
             raise GeneralException(d.error["message"])
@@ -204,7 +204,7 @@ class PsychoPass:
             raise GeneralException(d['error']['message'])
         return result
 
-    def report_user(self, user_id: int, reason: str, message: str, source_url: str) -> bool:
+    def report_user(self, user_id: int, reason: str, message: str, source_url: str = None) -> bool:
         """Report a user, on the API, to be worked upon by the inspectors
 
         Args:
@@ -219,7 +219,7 @@ class PsychoPass:
         Returns:
             bool
         """
-        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&src={quote_plus(source_url)}")
+        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&src={quote_plus(source_url) if source_url else None}")
         d = ReportResponse(**r.json())
         if d.success:
             return True
