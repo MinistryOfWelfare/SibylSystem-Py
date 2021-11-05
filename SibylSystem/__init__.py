@@ -133,7 +133,7 @@ class PsychoPass:
 
         result = r.json()
         if result['success'] == False:
-            raise GeneralException(result.error['message'])
+            raise GeneralException(result['error']['message'])
         return result
     
     def get_token(self, user_id: int):
@@ -143,7 +143,7 @@ class PsychoPass:
         r = self.client.get(f'{self.host}{method}{self.token}&user-id={user_id}')
         d = r.json()
         if d["success"] == False:
-            raise GeneralException(d.error["message"])
+            raise GeneralException(d['error']["message"])
         return Token(**d['result'])
         
     def add_ban(self, user_id: int, reason: str, message: str=None, source: str=None) -> BanRes:
