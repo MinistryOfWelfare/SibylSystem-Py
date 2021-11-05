@@ -23,6 +23,7 @@ from SibylSystem.types.error import Error
 @dataclass
 class Ban:
     user_id: Optional[int] = None
+    is_bot: Optional[bool] = False
     banned: Optional[bool] = None
     reason: Optional[str] = None
     message: Optional[str] = None
