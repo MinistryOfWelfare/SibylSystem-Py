@@ -18,6 +18,7 @@ import httpx, typing
 
 from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult, BanRes, ReportResponse
 from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
+from urllib.parse import quote_plus
 __version__ = '0.0.9'
 
 class PsychoPass:
@@ -138,8 +139,8 @@ class PsychoPass:
     def get_token(self, user_id: int):
         return self._token_method('getToken?token=', user_id)
 
-    def _token_method(self, arg0, user_id):
-        r = self.client.get(f'{self.host}{arg0}{self.token}&user-id={user_id}')
+    def _token_method(self, method, user_id):
+        r = self.client.get(f'{self.host}{method}{self.token}&user-id={user_id}')
         d = r.json()
         if d["success"] == False:
             raise GeneralException(d.error["message"])
@@ -160,7 +161,7 @@ class PsychoPass:
         Returns:
             BanResult
         """
-        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={reason}&message={message}&source={source}")
+        r = self.client.get(f"{self.host}addBan?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&source={quote_plus(message)}")
         d = BanResult(**r.json())
         if not d.success:
             raise GeneralException(d.error["message"])
@@ -196,8 +197,8 @@ class PsychoPass:
         r = self._check_response('getInfo?token=', user_id)
         return Ban(**r.json()["result"])
 
-    def _check_response(self, arg0, user_id):
-        result = self.client.get(f'{self.host}{arg0}{self.token}&user-id={user_id}')
+    def _check_response(self, method, user_id):
+        result = self.client.get(f'{self.host}{method}{self.token}&user-id={user_id}')
         d = result.json()
         if d['success'] == False:
             raise GeneralException(d['error']['message'])
@@ -218,7 +219,7 @@ class PsychoPass:
         Returns:
             bool
         """
-        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={reason}&message={message}&src={source_url}")
+        r = self.client.get(f"{self.host}reportUser?token={self.token}&user-id={user_id}&reason={quote_plus(reason)}&message={quote_plus(message)}&src={quote_plus(source_url)}")
         d = ReportResponse(**r.json())
         if d.success:
             return True
