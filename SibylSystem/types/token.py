@@ -18,11 +18,13 @@ from dataclasses import dataclass
 from typing import Optional
 from datetime import datetime
 
+
 @dataclass
 class TokenValidation:
     success: Optional[bool] = None
     result: Optional[bool] = None
     error: Optional[str] = None
+
 
 @dataclass
 class Token:

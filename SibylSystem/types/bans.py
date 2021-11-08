@@ -32,12 +32,13 @@ class Ban:
     crime_coefficient: Optional[int] = None
     date: Optional[str] = None
     ban_flags: Optional[List[str]] = None
-    
-    
+
+
 @dataclass
 class BanRes:
     previous_ban: Optional[Ban] = None
     current_ban: Optional[Ban] = None
+
 
 @dataclass
 class BanResult:
