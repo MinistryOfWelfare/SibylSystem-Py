@@ -28,10 +28,22 @@ class Ban:
     reason: Optional[str] = None
     message: Optional[str] = None
     ban_source_url: Optional[str] = None
+    source_group: Optional[str] = None
     banned_by: Optional[int] = None
     crime_coefficient: Optional[int] = None
     date: Optional[str] = None
     ban_flags: Optional[List[str]] = None
+
+
+
+@dataclass
+class MultiBanInfo:
+    user_id: Optional[int] = None
+    is_bot: Optional[bool] = False
+    reason: Optional[str] = None
+    message: Optional[str] = None
+    source: Optional[str] = None
+    source_group: Optional[str] = None
 
 
 @dataclass

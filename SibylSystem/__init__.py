@@ -16,9 +16,25 @@
 
 import httpx
 import typing
+import json
 
-from .exceptions import GeneralException, InvalidTokenException, InvalidPermissionRangeException
-from .types import TokenValidation, Ban, BanResult, Token, PermissionResponse, StatsResult, BanRes, ReportResponse
+from .exceptions import(
+    GeneralException,
+    InvalidTokenException,
+    InvalidPermissionRangeException,
+)
+
+from .types import(
+    Ban, 
+    Token,
+    BanRes, 
+    BanResult, 
+    StatsResult, 
+    MultiBanInfo,
+    ReportResponse,
+    TokenValidation,
+    PermissionResponse, 
+) 
 
 __version__ = '0.0.10'
 
@@ -158,6 +174,33 @@ class PsychoPass:
             raise GeneralException(d['error']["message"])
         return Token(**d['result'])
 
+    def multi_ban(self, info: dict[MultiBanInfo]) -> BanRes:
+        """Add multiple ban to sibyl system.
+
+        Args:
+            info (:obj:`dict[MultiBanInfo]`): The multiban info.
+
+        Raises:
+            GeneralException
+
+        Returns:
+            BanResult
+        """
+        headers = {
+            'token': self.token,
+        }
+        
+        jData = json.dump({"users": info})
+        
+        r = self.client.post(
+            f"{self.host}multiBan", headers=headers, data=jData)
+            
+        j = r.json()
+
+        if not j["success"]:
+            raise GeneralException(j["error"]["message"])
+        return j["result"]
+
     def add_ban(self, user_id: int, reason: str, message: typing.Optional[str] = None,
                 source: typing.Optional[str] = None,
                 is_bot: typing.Optional[bool] = False) -> BanRes:
@@ -168,7 +211,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`, optional): [Ban message, basically the message the given user was banned upon.]. Defaults to None.
             source (:obj:`str`, optional): [Ban source, the message link to the message the user was banned upon]. Defaults to None.
-            is_bot (:obj:`str`, optional): Define whether the banee is a bot or not, defaults to False
+            is_bot (:obj:`str`, optional): Define whether the ban is a bot or not, defaults to False
 
         Raises:
             GeneralException
@@ -194,6 +237,7 @@ class PsychoPass:
         if not d.success:
             raise GeneralException(d.error["message"])
         return d.result
+
 
     def delete_ban(self, user_id: int) -> bool:
         """Unban a user

@@ -15,9 +15,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from .token import Token, TokenValidation
-from .bans import Ban, BanResult, BanRes
+from .bans import Ban, BanResult, BanRes, MultiBanInfo
 from .permission import PermissionResponse, Permissions
 from .stats import StatsResult
 from .report import ReportResponse
 
-__all__ = [Token, TokenValidation, Ban, BanResult, PermissionResponse, Permissions, StatsResult, BanRes, ReportResponse]
+__all__ = [
+    Ban,
+    Token, 
+    BanRes, 
+    BanResult, 
+    Permissions,
+    StatsResult,
+    MultiBanInfo,
+    ReportResponse,
+    TokenValidation, 
+    PermissionResponse,
+]
