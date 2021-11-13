@@ -190,7 +190,7 @@ class PsychoPass:
             'token': self.token,
         }
         
-        jData = json.dump({"users": info})
+        jData = json.dumps({"users": info})
         
         r = self.client.post(
             f"{self.host}multiBan", headers=headers, data=jData)
