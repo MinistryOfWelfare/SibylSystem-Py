@@ -189,8 +189,12 @@ class PsychoPass:
         headers = {
             'token': self.token,
         }
+
+        infoList = []
+        for i in info:
+            infoList.append(i.to_dict())
         
-        jData = json.dumps({"users": info})
+        jData = json.dumps({"users": infoList})
         
         r = self.client.post(
             f"{self.host}multiBan", headers=headers, data=jData)

@@ -46,6 +46,17 @@ class MultiBanInfo:
     source_group: Optional[str] = None
 
 
+    def to_dict(self) -> dict:
+        return {
+            "user_id": self.user_id,
+            "is_bot": self.is_bot,
+            "reason": self.reason,
+            "message": self.message,
+            "source": self.source,
+            "source_group": self.source_group
+        }
+
+
 @dataclass
 class BanRes:
     previous_ban: Optional[Ban] = None
