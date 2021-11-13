@@ -174,7 +174,7 @@ class PsychoPass:
             raise GeneralException(d['error']["message"])
         return Token(**d['result'])
 
-    def multi_ban(self, info: dict[MultiBanInfo]) -> BanRes:
+    def multi_ban(self, info: typing.List[MultiBanInfo]) -> str:
         """Add multiple ban to sibyl system.
 
         Args:
