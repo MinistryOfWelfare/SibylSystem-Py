@@ -22,17 +22,18 @@ from SibylSystem.types.error import Error
 
 @dataclass
 class Ban:
-    user_id: Optional[int] = None
-    is_bot: Optional[bool] = False
-    banned: Optional[bool] = None
+    date: str = None
+    user_id: int = None
     reason: Optional[str] = None
     message: Optional[str] = None
-    ban_source_url: Optional[str] = None
-    source_group: Optional[str] = None
+    banned: Optional[bool] = None
+    is_bot: Optional[bool] = False
+    hue_color: Optional[str] = None
     banned_by: Optional[int] = None
-    crime_coefficient: Optional[int] = None
-    date: Optional[str] = None
+    source_group: Optional[str] = None
+    ban_source_url: Optional[str] = None
     ban_flags: Optional[List[str]] = None
+    crime_coefficient: Optional[int] = None
 
 
 
