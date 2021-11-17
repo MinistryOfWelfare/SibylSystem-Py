@@ -205,6 +205,34 @@ class PsychoPass:
             raise GeneralException(j["error"]["message"])
         return j["result"]
 
+    def multi_unban(self, users: typing.List[int]) -> str:
+        """push multiple unban request to sibyl system.
+
+        Args:
+            users (:obj:`dict[int]`): The users IDs to be unbanned.
+
+        Raises:
+            GeneralException
+
+        Returns:
+            BanResult
+        """
+        headers = {
+            'token': self.token,
+        }
+        
+        
+        jData = json.dumps({"users": users})
+        
+        r = self.client.post(
+            f"{self.host}multiUnBan", headers=headers, data=jData)
+            
+        j = r.json()
+
+        if not j["success"]:
+            raise GeneralException(j["error"]["message"])
+        return j["result"]
+
     def add_ban(self, user_id: int, reason: str, message: typing.Optional[str] = None,
                 source: typing.Optional[str] = None,
                 is_bot: typing.Optional[bool] = False) -> BanRes:
