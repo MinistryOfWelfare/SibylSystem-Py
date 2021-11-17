@@ -36,7 +36,7 @@ from .types import(
     PermissionResponse, 
 ) 
 
-__version__ = '0.0.11'
+__version__ = '0.0.12'
 
 
 class PsychoPass:
@@ -54,7 +54,7 @@ class PsychoPass:
                  client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
         if show_license:
             l = '''
-    SibylSystem Copyright (C) 2021 Sayan Biswas, AnonyIndian
+    SibylSystem-Py Copyright (C) 2021 Sayan Biswas, AnonyIndian, AliWoto
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions.
