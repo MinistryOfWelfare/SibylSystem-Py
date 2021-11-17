@@ -184,21 +184,18 @@ class PsychoPass:
             GeneralException
 
         Returns:
-            BanResult
+            str
         """
         headers = {
             'token': self.token,
         }
 
-        infoList = []
-        for i in info:
-            infoList.append(i.to_dict())
-        
+        infoList = [i.to_dict() for i in info]
         jData = json.dumps({"users": infoList})
-        
+
         r = self.client.post(
             f"{self.host}multiBan", headers=headers, data=jData)
-            
+
         j = r.json()
 
         if not j["success"]:
@@ -215,7 +212,7 @@ class PsychoPass:
             GeneralException
 
         Returns:
-            BanResult
+            str
         """
         headers = {
             'token': self.token,
