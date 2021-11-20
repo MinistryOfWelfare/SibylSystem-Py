@@ -295,8 +295,9 @@ class PsychoPass:
         Returns:
             Ban
         """
-        r = self._check_response('getInfo?token=', user_id)
-        return Ban(**r.json()["result"])
+        r = self._check_response('getInfo?token=', user_id).json()["result"]
+        r["date"] = datetime.strptime(r["date"], "%Y-%m-%d at %H:%M:%S")
+        return Ban(**r)
 
     def _check_response(self, method, user_id):
         headers = {
