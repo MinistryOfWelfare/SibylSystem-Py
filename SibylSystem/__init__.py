@@ -240,7 +240,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`, optional): [Ban message, basically the message the given user was banned upon.]. Defaults to None.
             source (:obj:`str`, optional): [Ban source, the message link to the message the user was banned upon]. Defaults to None.
-            is_bot (:obj:`str`, optional): Define whether the ban is a bot or not, defaults to False
+            is_bot (:obj:`str`, optional): Define whether the user being banned is a bot or not, defaults to False
 
         Raises:
             GeneralException
@@ -319,7 +319,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`): Ban message, basically the message the given user to be banned upon.
             source_url (:obj:`str`, optional): Ban source, the message link to the message the user was banned upon.
-            is_bot (:obj:`bool`, optional): [Is the user a bot?]. Defaults to False.
+            is_bot (:obj:`bool`, optional): Define whether the user being banned is a bot or not, defaults to False.
 
         Raises:
             GeneralException
