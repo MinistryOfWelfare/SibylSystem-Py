@@ -19,12 +19,14 @@ from .bans import Ban, BanResult, BanRes, MultiBanInfo
 from .permission import PermissionResponse, Permissions
 from .stats import StatsResult
 from .report import ReportResponse
+from .general_info import GeneralInfo
 
 __all__ = [
     Ban,
     Token, 
     BanRes, 
     BanResult, 
+    GeneralInfo,
     Permissions,
     StatsResult,
     MultiBanInfo,
