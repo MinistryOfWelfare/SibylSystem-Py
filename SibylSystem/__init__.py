@@ -29,6 +29,7 @@ from .types import(
     Token,
     BanRes, 
     BanResult, 
+    GeneralInfo,
     StatsResult, 
     MultiBanInfo,
     ReportResponse,
@@ -85,8 +86,8 @@ class PsychoPass:
         Returns:
             bool: if the token is valid, it will return True, else False
         """
-        headers = {'token': token}
-        r = self.client.get(f"{self.host}checkToken", headers=headers)
+        params = {'token': token}
+        r = self.client.get(f"{self.host}checkToken", params=params)
         x = TokenValidation(**r.json())
         if not x.success:
             raise InvalidTokenException()
@@ -114,14 +115,14 @@ class PsychoPass:
         if permission > 2:
             raise InvalidPermissionRangeException("Permission can be 0, 1, 2, not {}".format(permission))
         d = self._prepare_url(
-            'createToken?token=', user_id, permission
+            'createToken', user_id, permission
         )
 
         return Token(**d["result"])
 
     def revoke_token(self, user_id: int):
         return self._token_method(
-            'revokeToken?token=', user_id
+            'revokeToken', user_id
         )
 
     def change_permission(self, user_id: int, permission: int) -> PermissionResponse:
@@ -142,18 +143,18 @@ class PsychoPass:
             PermissionResponse
         """
         d = self._prepare_url(
-            'changePerm?token=', user_id, permission
+            'changePerm', user_id, permission
         )
 
         return PermissionResponse(**d)
 
-    def _prepare_url(self, method, user_id, permission):
-        headers = {
+    def _prepare_url(self, method: str, user_id: int, permission: int):
+        params = {
             'token': self.token,
             'user-id': str(user_id),
             'permission': str(permission)
         }
-        r = self.client.get(url=f'{self.host}{method}', headers=headers)
+        r = self.client.get(url=f'{self.host}{method}', params=params)
 
         result = r.json()
         if not result['success']:
@@ -163,7 +164,7 @@ class PsychoPass:
     def get_token(self, user_id: int):
         return self._token_method('getToken?token=', user_id)
 
-    def _token_method(self, method, user_id):
+    def _token_method(self, method: str, user_id: int):
         headers = {
             'token': self.token,
             'user-id': str(user_id)
@@ -248,20 +249,20 @@ class PsychoPass:
         Returns:
             BanResult
         """
-        headers = {
+        params = {
             'token': self.token,
             'user-id': str(user_id),
             'isBot': str(is_bot)
         }
         if message is not None:
-            headers['message'] = message
+            params['message'] = message
         if reason is not None:
-            headers['reason'] = reason
+            params['reason'] = reason
         if source is not None:
-            headers['source'] = source
+            params['source'] = source
 
         r = self.client.get(
-            f"{self.host}addBan", headers=headers)
+            f"{self.host}addBan", params=params)
         d = BanResult(**r.json())
         if not d.success:
             raise GeneralException(d.error["message"])
@@ -280,7 +281,7 @@ class PsychoPass:
         Returns:
             bool
         """
-        self._check_response('removeBan?token=', user_id)
+        self._check_response('removeBan', user_id)
         return True
 
     def get_info(self, user_id: int) -> Ban:
@@ -295,15 +296,15 @@ class PsychoPass:
         Returns:
             Ban
         """
-        r = self._check_response('getInfo?token=', user_id)
+        r = self._check_response('getInfo', user_id)
         return Ban(**r.json()["result"])
 
     def _check_response(self, method, user_id):
-        headers = {
+        params = {
             'token': self.token,
             'user-id': str(user_id)
         }
-        result = self.client.get(f'{self.host}{method}', headers=headers)
+        result = self.client.get(f'{self.host}{method}', params=params)
         d = result.json()
         if not d['success']:
             raise GeneralException(d['error']['message'])
@@ -326,7 +327,7 @@ class PsychoPass:
         Returns:
             bool
         """
-        headers = {
+        data = {
             'token': self.token,
             'user-id': str(user_id),
             'reason': reason,
@@ -334,10 +335,10 @@ class PsychoPass:
             'isBot': str(is_bot)
         }
         if source_url is not None:
-            headers['src'] = source_url
+            data['src'] = source_url
 
         r = self.client.get(
-            f"{self.host}reportUser", headers=headers)
+            f"{self.host}reportUser", params=data)
         d = ReportResponse(**r.json())
         if d.success:
             return True
@@ -352,11 +353,33 @@ class PsychoPass:
         Returns:
             StatsResult
         """
-        headers = {
+        params = {
             'token': self.token
         }
-        r = self.client.get(f"{self.host}stats", headers=headers)
+        r = self.client.get(f"{self.host}stats", params=params)
         d = StatsResult(**r.json())
+        if d.success:
+            return d
+        raise GeneralException(d.error["message"])
+    
+    def get_general_info(self, user_id: int) -> GeneralInfo:
+        """
+
+        Args:
+            user_id (:obj:`int`): User ID of the user to be looked up
+
+        Raises:
+            GeneralException
+
+        Returns:
+            GeneralInfo
+        """
+        params = {
+            'token': self.token,
+            'user-id': str(user_id)
+        }
+        r = self.client.get(f"{self.host}getGeneralInfo", params=params)
+        d = GeneralInfo(**r.json())
         if d.success:
             return d
         raise GeneralException(d.error["message"])
