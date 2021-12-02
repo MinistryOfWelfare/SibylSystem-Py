@@ -17,6 +17,7 @@
 import httpx
 import typing
 import json
+from datetime import datetime
 
 from .exceptions import(
     GeneralException,
@@ -241,7 +242,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`, optional): [Ban message, basically the message the given user was banned upon.]. Defaults to None.
             source (:obj:`str`, optional): [Ban source, the message link to the message the user was banned upon]. Defaults to None.
-            is_bot (:obj:`str`, optional): Define whether the ban is a bot or not, defaults to False
+            is_bot (:obj:`str`, optional): Define whether the user being banned is a bot or not, defaults to False
 
         Raises:
             GeneralException
@@ -296,8 +297,9 @@ class PsychoPass:
         Returns:
             Ban
         """
-        r = self._check_response('getInfo', user_id)
-        return Ban(**r.json()["result"])
+        r = self._check_response('getInfo', user_id).json()["result"]
+        r["date"] = datetime.strptime(r["date"], "%Y-%m-%d at %H:%M:%S")
+        return Ban(**r)
 
     def _check_response(self, method, user_id):
         params = {
@@ -319,7 +321,7 @@ class PsychoPass:
             reason (:obj:`str`): reason of the ban
             message (:obj:`str`): Ban message, basically the message the given user to be banned upon.
             source_url (:obj:`str`, optional): Ban source, the message link to the message the user was banned upon.
-            is_bot (:obj:`bool`, optional): [Is the user a bot?]. Defaults to False.
+            is_bot (:obj:`bool`, optional): Define whether the user being banned is a bot or not, defaults to False.
 
         Raises:
             GeneralException
