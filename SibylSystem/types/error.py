@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
 from typing import Optional
 
+from pydantic import BaseModel
 
-@dataclass
-class Error:
+
+class Error(BaseModel):
     code: Optional[int] = None
     message: Optional[str] = None
     origin: Optional[str] = None

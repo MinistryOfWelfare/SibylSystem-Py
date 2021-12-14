@@ -1,9 +1,11 @@
-from dataclasses import dataclass
 from typing import Optional
+
+from pydantic import BaseModel
+
 from .error import Error
 
-@dataclass
-class Result:
+
+class Result(BaseModel):
     user_id: Optional[int] = None
     division: Optional[int] = None
     assigned_by: Optional[int] = None
@@ -12,8 +14,7 @@ class Result:
     permission: Optional[int] = None
 
 
-@dataclass
-class GeneralInfo:
+class GeneralInfo(BaseModel):
     error: Optional[Error]
     success: Optional[bool] = None
     result: Optional[Result] = None

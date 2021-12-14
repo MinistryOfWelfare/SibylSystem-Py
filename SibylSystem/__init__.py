@@ -19,26 +19,26 @@ import typing
 import json
 from datetime import datetime
 
-from .exceptions import(
+from .exceptions import (
     GeneralException,
     InvalidTokenException,
     InvalidPermissionRangeException,
 )
 
-from .types import(
-    Ban, 
+from .types import (
+    Ban,
     Token,
-    BanRes, 
-    BanResult, 
+    BanRes,
+    BanResult,
     GeneralInfo,
-    StatsResult, 
+    StatsResult,
     MultiBanInfo,
     ReportResponse,
     TokenValidation,
-    PermissionResponse, 
-) 
+    PermissionResponse,
+)
 
-__version__ = '0.0.12'
+__version__ = '0.0.13'
 
 
 class PsychoPass:
@@ -193,7 +193,7 @@ class PsychoPass:
         }
 
         infoList = [i.to_dict() for i in info]
-        jData = json.dumps({"users": infoList})
+        jData = json.dumps({"users": infoList}).__dict__
 
         r = self.client.post(
             f"{self.host}multiBan", headers=headers, data=jData)
@@ -219,13 +219,12 @@ class PsychoPass:
         headers = {
             'token': self.token,
         }
-        
-        
-        jData = json.dumps({"users": users})
-        
+
+        jData = json.dumps({"users": users}).__dict__
+
         r = self.client.post(
             f"{self.host}multiUnBan", headers=headers, data=jData)
-            
+
         j = r.json()
 
         if not j["success"]:
@@ -268,7 +267,6 @@ class PsychoPass:
         if not d.success:
             raise GeneralException(d.error["message"])
         return d.result
-
 
     def delete_ban(self, user_id: int) -> bool:
         """Unban a user
@@ -363,7 +361,7 @@ class PsychoPass:
         if d.success:
             return d
         raise GeneralException(d.error["message"])
-    
+
     def get_general_info(self, user_id: int) -> GeneralInfo:
         """
 

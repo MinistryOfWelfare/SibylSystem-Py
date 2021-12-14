@@ -16,12 +16,11 @@
 
 from dataclasses import dataclass
 from typing import List, Optional
-
+from pydantic import BaseModel
 from SibylSystem.types.error import Error
 
 
-@dataclass
-class Ban:
+class Ban(BaseModel):
     date: str = None
     user_id: int = None
     reason: Optional[str] = None
@@ -36,7 +35,6 @@ class Ban:
     crime_coefficient: Optional[int] = None
 
 
-
 @dataclass
 class MultiBanInfo:
     user_id: Optional[int] = None
@@ -45,7 +43,6 @@ class MultiBanInfo:
     message: Optional[str] = None
     source: Optional[str] = None
     source_group: Optional[str] = None
-
 
     def to_dict(self) -> dict:
         return {
@@ -58,14 +55,12 @@ class MultiBanInfo:
         }
 
 
-@dataclass
-class BanRes:
+class BanRes(BaseModel):
     previous_ban: Optional[Ban] = None
     current_ban: Optional[Ban] = None
 
 
-@dataclass
-class BanResult:
+class BanResult(BaseModel):
     success: Optional[bool] = False
     result: Optional[BanRes] = None
     error: Optional[Error] = None

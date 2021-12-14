@@ -14,20 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel
 
 
-@dataclass
-class TokenValidation:
+class TokenValidation(BaseModel):
     success: Optional[bool] = None
     result: Optional[bool] = None
     error: Optional[str] = None
 
 
-@dataclass
-class Token:
+class Token(BaseModel):
     user_id: Optional[int] = None
     hash: Optional[str] = None
     permission: Optional[int] = None

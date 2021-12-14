@@ -14,14 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from dataclasses import dataclass
 from typing import Optional
+
+from pydantic import BaseModel
 
 from SibylSystem.types.error import Error
 
 
-@dataclass
-class ReportResponse:
+class ReportResponse(BaseModel):
     success: Optional[bool] = None
     result: Optional[str] = None
     error: Optional[Error] = None
