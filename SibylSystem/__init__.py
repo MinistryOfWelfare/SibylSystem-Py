@@ -265,7 +265,7 @@ class PsychoPass:
             f"{self.host}addBan", params=params)
         d = BanResult(**r.json())
         if not d.success:
-            raise GeneralException(d.error["message"])
+            raise GeneralException(d.error.message)
         return d.result
 
     def delete_ban(self, user_id: int) -> bool:
@@ -342,7 +342,7 @@ class PsychoPass:
         d = ReportResponse(**r.json())
         if d.success:
             return True
-        raise GeneralException(d.error["message"])
+        raise GeneralException(d.error.message)
 
     def get_stats(self) -> StatsResult:
         """Get stats from API
@@ -360,7 +360,7 @@ class PsychoPass:
         d = StatsResult(**r.json())
         if d.success:
             return d
-        raise GeneralException(d.error["message"])
+        raise GeneralException(d.error.message)
 
     def get_general_info(self, user_id: int) -> GeneralInfo:
         """
@@ -382,4 +382,4 @@ class PsychoPass:
         d = GeneralInfo(**r.json())
         if d.success:
             return d
-        raise GeneralException(d.error["message"])
+        raise GeneralException(d.error.message)
