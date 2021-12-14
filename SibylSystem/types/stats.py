@@ -18,7 +18,7 @@ from typing import Optional, Dict
 
 from pydantic import BaseModel
 
-from SibylSystem.types.error import Error
+from .error import Error
 
 
 class StatsResult(BaseModel):

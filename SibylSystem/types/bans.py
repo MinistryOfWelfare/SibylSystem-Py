@@ -17,7 +17,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
 from pydantic import BaseModel
-from SibylSystem.types.error import Error
+from .error import Error
 
 
 class Ban(BaseModel):

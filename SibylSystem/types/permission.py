@@ -19,7 +19,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from SibylSystem.types.error import Error
+from .error import Error
 
 
 class PermissionResponse(BaseModel):
