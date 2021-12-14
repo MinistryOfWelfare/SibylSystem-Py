@@ -32,3 +32,4 @@ class Permissions(Enum):
     USER = 0
     ENFORCER = 1
     INSPECTOR = 2
+    OWNER = 3
