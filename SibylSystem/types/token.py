@@ -30,6 +30,9 @@ class Token(BaseModel):
     user_id: Optional[int] = None
     hash: Optional[str] = None
     permission: Optional[int] = None
-    created_at: Optional[datetime] = None
+    created_at: Optional[str] = None
     accepted_reports: Optional[int] = None
     denied_reports: Optional[int] = None
+
+    def get_datetime(self) -> datetime:
+        return datetime.strptime(self.created_at, "%Y-%m-%d at %H:%M:%S")

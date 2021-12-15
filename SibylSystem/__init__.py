@@ -17,7 +17,6 @@
 import httpx
 import typing
 import json
-from datetime import datetime
 
 from .exceptions import (
     GeneralException,
@@ -296,7 +295,6 @@ class PsychoPass:
             Ban
         """
         r = self._check_response('getInfo', user_id).json()["result"]
-        r["date"] = datetime.strptime(r["date"], "%Y-%m-%d at %H:%M:%S")
         return Ban(**r)
 
     def _check_response(self, method, user_id):

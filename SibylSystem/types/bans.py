@@ -14,15 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import datetime
-from dataclasses import dataclass
+from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel
 from .error import Error
 
 
 class Ban(BaseModel):
-    date: datetime.datetime = None
+    date: str = ''
     user_id: int = None
     reason: Optional[str] = None
     message: Optional[str] = None
@@ -35,15 +34,33 @@ class Ban(BaseModel):
     ban_flags: Optional[List[str]] = None
     crime_coefficient: Optional[int] = None
 
+    def get_datetime(self) -> datetime:
+        return datetime.strptime(self.date, "%Y-%m-%d at %H:%M:%S")
 
-@dataclass
+
+
 class MultiBanInfo:
-    user_id: Optional[int] = None
-    is_bot: Optional[bool] = False
-    reason: Optional[str] = None
-    message: Optional[str] = None
-    source: Optional[str] = None
-    source_group: Optional[str] = None
+    user_id: int = None
+    is_bot: bool = False
+    reason: Optional[str] = ''
+    message: Optional[str] = ''
+    source: Optional[str] = ''
+    source_group: Optional[str] = ''
+
+    def __init__(self, 
+            user_id: int, 
+            is_bot: bool = False, 
+            reason: str = '', 
+            message: str = '', 
+            source: str = '', 
+            source_group: str = '',
+        ):
+        self.user_id = user_id
+        self.is_bot = is_bot
+        self.reason = reason
+        self.message = message
+        self.source = source
+        self.source_group = source_group
 
     def to_dict(self) -> dict:
         return {
@@ -59,6 +76,9 @@ class MultiBanInfo:
 class BanRes(BaseModel):
     previous_ban: Optional[Ban] = None
     current_ban: Optional[Ban] = None
+
+    def has_previous_ban(self) -> bool:
+        return self.previous_ban is not None
 
 
 class BanResult(BaseModel):
