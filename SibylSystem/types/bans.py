@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import datetime
 from dataclasses import dataclass
 from typing import List, Optional
 from pydantic import BaseModel
@@ -21,7 +22,7 @@ from .error import Error
 
 
 class Ban(BaseModel):
-    date: str = None
+    date: datetime.datetime = None
     user_id: int = None
     reason: Optional[str] = None
     message: Optional[str] = None
