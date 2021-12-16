@@ -20,8 +20,24 @@ from pydantic import BaseModel
 
 from .error import Error
 
+class SibylStats:
+    banned_count: int = 0
+    trolling_ban_count: int = 0
+    spam_ban_count: int = 0
+    evade_ban_count: int = 0
+    custom_ban_count: int = 0
+    psycho_hazard_ban_count: int = 0
+    mal_imp_ban_count: int = 0
+    nsfw_ban_count: int = 0
+    spam_bot_ban_count: int = 0
+    raid_ban_count: int = 0
+    mass_add_ban_count: int = 0
+    cloudy_count: int = 0
+    token_count: int = 0
+    inspectors_count: int = 0
+    enforces_count: int = 0
 
 class StatsResult(BaseModel):
     error: Optional[Error] = None
     success: Optional[bool] = None
-    result: Optional[Dict[str, int]] = None
+    result: Optional[SibylStats] = None
