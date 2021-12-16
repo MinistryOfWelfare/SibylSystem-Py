@@ -20,7 +20,7 @@ from pydantic import BaseModel
 
 from .error import Error
 
-class SibylStats:
+class SibylStats(BaseModel):
     banned_count: int = 0
     trolling_ban_count: int = 0
     spam_ban_count: int = 0
