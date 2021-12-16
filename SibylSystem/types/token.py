@@ -18,12 +18,13 @@ from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel
+from .error import Error
 
 
 class TokenValidation(BaseModel):
     success: Optional[bool] = None
     result: Optional[bool] = None
-    error: Optional[str] = None
+    error: Optional[Error] = None
 
 
 class Token(BaseModel):
