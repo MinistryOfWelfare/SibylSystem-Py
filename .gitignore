@@ -9,6 +9,7 @@ build/
 develop-eggs/
 dist/
 downloads/
+env/
 eggs/
 .eggs/
 lib/

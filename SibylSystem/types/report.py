@@ -25,3 +25,28 @@ class ReportResponse(BaseModel):
     success: Optional[bool] = None
     result: Optional[str] = None
     error: Optional[Error] = None
+
+class MultiScanInfo:
+    user_id: int = None
+    reason: Optional[str] = ''
+    message: Optional[str] = ''
+    target_type: Optional[int] = 0
+
+    def __init__(self, 
+            user_id: int, 
+            reason: str = '', 
+            message: str = '', 
+            target_type: int = 0,
+        ):
+        self.user_id = user_id
+        self.reason = reason
+        self.message = message
+        self.target_type = target_type
+
+    def to_dict(self) -> dict:
+        return {
+            "user_id": self.user_id,
+            "reason": self.reason,
+            "message": self.message,
+            "target_type": self.target_type,
+        }

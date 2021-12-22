@@ -18,7 +18,7 @@ from .token import Token, TokenValidation
 from .bans import Ban, BanResult, BanRes, MultiBanInfo
 from .permission import PermissionResponse, Permissions
 from .stats import StatsResult
-from .report import ReportResponse
+from .report import ReportResponse, MultiScanInfo
 from .general_info import GeneralInfo
 
 __all__ = [
@@ -30,6 +30,7 @@ __all__ = [
     Permissions,
     StatsResult,
     MultiBanInfo,
+    MultiScanInfo,
     ReportResponse,
     TokenValidation, 
     PermissionResponse,

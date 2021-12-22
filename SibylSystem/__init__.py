@@ -32,6 +32,7 @@ from .types import (
     GeneralInfo,
     StatsResult,
     MultiBanInfo,
+    MultiScanInfo,
     ReportResponse,
     TokenValidation,
     PermissionResponse,
@@ -175,6 +176,38 @@ class PsychoPass:
             raise GeneralException(d['error']["message"])
         return Token(**d['result'])
 
+    def multi_scan(self, source, group_link, info: typing.List[MultiScanInfo]) -> str:
+        """report multiple scans to sibyl system.
+
+        Args:
+            info (:obj:`dict[MultiScanInfo]`): The multiscan info.
+
+        Raises:
+            GeneralException
+
+        Returns:
+            str
+        """
+        headers = {
+            'token': self.token,
+        }
+        infoList = [i.to_dict() for i in info]
+        jData = {
+                "users": infoList,
+                "source": source,
+                "group_link": group_link,
+                }
+
+        r = self.client.post(
+            f"{self.host}multiScan", headers=headers, json=jData)
+
+        j = r.json()
+
+        if not j["success"]:
+            raise GeneralException(j["error"]["message"])
+        return j["result"]
+
+
     def multi_ban(self, info: typing.List[MultiBanInfo]) -> str:
         """Add multiple ban to sibyl system.
 
@@ -192,10 +225,10 @@ class PsychoPass:
         }
 
         infoList = [i.to_dict() for i in info]
-        jData = json.dumps({"users": infoList}).__dict__
+        jData = {"users": infoList}
 
         r = self.client.post(
-            f"{self.host}multiBan", headers=headers, data=jData)
+            f"{self.host}multiBan", headers=headers, json=jData)
 
         j = r.json()
 
