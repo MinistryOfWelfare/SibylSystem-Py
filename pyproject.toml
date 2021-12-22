@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "SibylSystem"
-version = "0.0.16"
+version = "0.0.17"
 description = "Python Wrapper for the Sibyl System Antispam API for telegram"
 authors = ["Sayan Biswas <sayan@pokurt.me>", "Anonymous Indian <anonyindian1@gmail.com>", "AliWoto <aminnimaj@gmail.com>"]
 packages = [
@@ -13,7 +13,7 @@ classifiers = [
 ]
 readme = "README.md"
 keywords = ["sibyl", "wrapper", "telegram", "antispam", "api"]
-homepage = "https://github.com/AnimeKaizoku/SibylSystem-Py"
+homepage = "https://github.com/MinistryOfWelfare/SibylSystem-Py"
 
 [tool.poetry.dependencies]
 python = "^3.7"
