@@ -49,11 +49,13 @@ class PsychoPass:
         token (:obj:`str`): Sibyl API token
         host (:obj:`str`, optional): Sibyl API service URL.
         client (:obj:`httpx.Client`, optional): HTTPX client class.
-        show_license (:obj:`bool`, optional): Defaults to true, set to false to hide copyright message
+        show_license (:obj:`bool`, optional): Defaults to true, set to false to hide copyright message.
+        validate_token (:obj:`bool`, optional): Defaults to false, set to true to validate the token.
     """
 
     def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.animekaizoku.com/",
-                 client: typing.Optional[httpx.Client] = None, show_license: bool = True) -> None:
+                 client: typing.Optional[httpx.Client] = None, show_license: bool = True,
+                 validate_token : bool = False) -> None:
         if show_license:
             l = '''
     SibylSystem-Py Copyright (C) 2021 Sayan Biswas, AnonyIndian, AliWoto
@@ -71,7 +73,7 @@ class PsychoPass:
         self.client = client
         if not self.client:
             self.client = httpx.Client()
-        if not self.check_token(self.token):
+        if validate_token and not self.check_token(self.token):
             raise InvalidTokenException()
 
     def check_token(self, token: str) -> bool:
