@@ -14,16 +14,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import httpx
 import typing
-import json
+
+import httpx
 
 from .exceptions import (
     GeneralException,
     InvalidTokenException,
     InvalidPermissionRangeException,
 )
-
 from .types import (
     Ban,
     Token,
@@ -55,7 +54,7 @@ class PsychoPass:
 
     def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.animekaizoku.com/",
                  client: typing.Optional[httpx.Client] = None, show_license: bool = True,
-                 validate_token : bool = False) -> None:
+                 validate_token: bool = False) -> None:
         if show_license:
             l = '''
     SibylSystem-Py Copyright (C) 2021 Sayan Biswas, AnonyIndian, AliWoto
@@ -195,10 +194,10 @@ class PsychoPass:
         }
         infoList = [i.to_dict() for i in info]
         jData = {
-                "users": infoList,
-                "source": source,
-                "group_link": group_link,
-                }
+            "users": infoList,
+            "source": source,
+            "group_link": group_link,
+        }
 
         r = self.client.post(
             f"{self.host}multiScan", headers=headers, json=jData)
@@ -208,7 +207,6 @@ class PsychoPass:
         if not j["success"]:
             raise GeneralException(j["error"]["message"])
         return j["result"]
-
 
     def multi_ban(self, info: typing.List[MultiBanInfo]) -> str:
         """Add multiple ban to sibyl system.
@@ -415,3 +413,38 @@ class PsychoPass:
         if d.success:
             return d
         raise GeneralException(d.error.message)
+
+    def remove_ban(self, user_id: int, reason: typing.Text):
+        params = {
+            'token': self.token,
+            'userid': str(user_id),
+            'reason': reason
+        }
+        r = self.client.get(f"{self.host}remBan", params=params)
+        # print(r)
+        d = r.json()
+        if d['success']:
+            return d
+        raise GeneralException(d.error.message)
+
+    def get_all_bans(self):
+        params = {
+            'token': self.token
+        }
+        r = self.client.get(f"{self.host}getBans", params=params)
+        d = r.json()
+        if d['success']:
+            return d
+        raise GeneralException(d.error.message)
+
+    def full_revert(self, user_id: int):
+        params = {
+            'token':  self.token,
+            'userid': user_id
+        }
+        r = self.client.get(f"{self.host}fullRevert", params=params)
+        d = r.json()
+        if d['success']:
+            return d
+        raise GeneralException(d.error.message)
+
