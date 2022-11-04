@@ -26,15 +26,20 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-
+      - name: Set the Version
+        run: |
+          grep_result=$(grep version pyproject.toml)
+          prefix="version = "
+          final_value=${string#"$prefix"}
+          echo "CURRENT_LIB_VERSION=${final_value}" >> $GITHUB_ENV
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ env.CURRENT_LIB_VERSION }}
+          release_name: ${{ env.CURRENT_LIB_VERSION }}
           draft: false
           prerelease: false
 
