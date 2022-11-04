@@ -33,7 +33,7 @@ jobs:
           suffix="\""
           final_value=${grep_result#"$prefix"}
           final_value=${final_value%"$suffix"}
-          echo "{CURRENT_LIB_VERSION}=$(echo $final_value)" >> $GITHUB_ENV
+          echo "CURRENT_LIB_VERSION=$(echo 'v'$final_value)" >> $GITHUB_ENV
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
