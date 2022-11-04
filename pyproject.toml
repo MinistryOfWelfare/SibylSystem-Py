@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "SibylSystem"
-version = "0.0.21"
+version = "0.0.22"
 description = "Python Wrapper for the Sibyl System Antispam API for telegram"
 authors = ["Sayan Biswas <sayan@pokurt.me>", "Anonymous Indian <anonyindian1@gmail.com>", "AliWoto <aminnimaj@gmail.com>"]
 packages = [
