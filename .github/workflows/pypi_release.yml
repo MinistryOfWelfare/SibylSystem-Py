@@ -29,9 +29,11 @@ jobs:
       - name: Set the Version
         run: |
           grep_result=$(grep version pyproject.toml)
-          prefix="version = "
+          prefix="version = \""
+          suffix="\""
           final_value=${grep_result#"$prefix"}
-          echo "CURRENT_LIB_VERSION=$(echo $final_value)" >> $GITHUB_ENV
+          final_value=${final_value%"$suffix"}
+          echo "{CURRENT_LIB_VERSION}=$(echo $final_value)" >> $GITHUB_ENV
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
