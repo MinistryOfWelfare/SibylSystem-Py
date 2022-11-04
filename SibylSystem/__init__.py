@@ -37,7 +37,7 @@ from .types import (
     PermissionResponse,
 )
 
-__version__ = '0.0.20'
+__version__ = '0.0.21'
 
 
 class PsychoPass:
