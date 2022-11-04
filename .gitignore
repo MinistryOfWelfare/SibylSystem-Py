@@ -23,5 +23,3 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
-
-tests/
