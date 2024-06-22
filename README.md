@@ -14,7 +14,7 @@ pip install sibylsystem
 >>> from SibylSystem import PsychoPass
 >>> c = PsychoPass("your token")
 
-    SibylSystem-Py Copyright (C) 2021 Sayan Biswas, AnonyIndian, AliWoto
+    SibylSystem-Py Copyright (C) 2024 Kaizoku
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions.
