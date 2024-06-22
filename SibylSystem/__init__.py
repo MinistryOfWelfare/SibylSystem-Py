@@ -52,12 +52,12 @@ class PsychoPass:
         validate_token (:obj:`bool`, optional): Defaults to false, set to true to validate the token.
     """
 
-    def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.animekaizoku.com/",
+    def __init__(self, token: str, host: typing.Optional[str] = "https://psychopass.kaizoku.cyou/",
                  client: typing.Optional[httpx.Client] = None, show_license: bool = True,
                  validate_token: bool = False) -> None:
         if show_license:
             l = '''
-    SibylSystem-Py Copyright (C) 2021 Sayan Biswas, AnonyIndian, AliWoto
+    SibylSystem-Py Copyright (C) 2024 Kaizoku
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions.
